@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฝากขายรถกับ TruckExpert - ขั้นตอนง่ายๆ เพื่อยอดขายสูงสุด</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; }
+        .step-active { color: #2563eb; border-color: #2563eb; }
+        .package-card:hover { transform: translateY(-5px); transition: all 0.3s; }
+        .upload-box { border: 2px dashed #cbd5e1; transition: all 0.2s; }
+        .upload-box:hover { border-color: #2563eb; background-color: #eff6ff; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-[1200px] mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="text-2xl font-bold text-blue-800 tracking-tighter cursor-pointer" onclick="window.location.href='home_page.html'">
+                TRUCK<span class="text-orange-500">EXPERT</span>
+            </div>
+            <a href="home_page.html" class="text-slate-500 hover:text-blue-600 font-bold text-sm">
+                <i class="fa-solid fa-xmark mr-2"></i> ยกเลิกการลงทะเบียน
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-[1000px] mx-auto px-4 py-12">
+        
+        <!-- Progress Steps -->
+        <div class="flex justify-between items-center mb-12 max-w-[600px] mx-auto">
+            <div class="flex flex-col items-center space-y-2">
+                <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">1</div>
+                <span class="text-xs font-bold text-blue-600">สมัครสมาชิก</span>
+            </div>
+            <div class="h-[2px] bg-slate-200 flex-1 mx-4 mb-6"></div>
+            <div class="flex flex-col items-center space-y-2">
+                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold">2</div>
+                <span class="text-xs font-bold text-slate-400">ข้อมูลรถ & รูปภาพ</span>
+            </div>
+            <div class="h-[2px] bg-slate-200 flex-1 mx-4 mb-6"></div>
+            <div class="flex flex-col items-center space-y-2">
+                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold">3</div>
+                <span class="text-xs font-bold text-slate-400">เลือกแพ็คเกจ</span>
+            </div>
+        </div>
+
+        <!-- Section 1: Member Registration -->
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 mb-8">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">ข้อมูลผู้ฝากขาย</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">ชื่อ-นามสกุล / ชื่อบริษัท</label>
+                    <input type="text" placeholder="ระบุชื่อเพื่อติดต่อ" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">เบอร์โทรศัพท์</label>
+                    <input type="tel" placeholder="08X-XXX-XXXX" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-blue-500">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">LINE ID (สำหรับรับข้อมูลการขาย)</label>
+                    <input type="text" placeholder="@yourlineid" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-blue-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Vehicle Information & Media -->
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-slate-800">ข้อมูลรถที่ต้องการฝากขาย</h2>
+                <span class="text-xs font-bold text-red-500">* จำเป็นต้องระบุ</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">ยี่ห้อ / รุ่น</label>
+                    <input type="text" placeholder="เช่น HINO VICTOR 500" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">ราคาที่ต้องการขาย (บาท)</label>
+                    <input type="number" placeholder="ระบุราคาที่ต้องการ" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-blue-500 font-bold text-blue-600">
+                </div>
+            </div>
+
+            <!-- Mandatory Photo Upload -->
+            <div class="mb-10">
+                <label class="block text-sm font-bold text-slate-700 mb-4">รูปภาพประกอบ (บังคับอย่างน้อย 4 มุม)</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Front -->
+                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านหน้า</span>
+                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
+                    </div>
+                    <!-- Left -->
+                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านซ้าย</span>
+                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
+                    </div>
+                    <!-- Right -->
+                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านขวา</span>
+                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
+                    </div>
+                    <!-- Back -->
+                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านหลัง</span>
+                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
+                    </div>
+                </div>
+                <!-- Video Upload (Optional) -->
+                <div class="mt-4">
+                    <div class="upload-box rounded-2xl p-6 flex items-center justify-center cursor-pointer w-full">
+                        <i class="fa-solid fa-video text-slate-300 text-xl mr-3"></i>
+                        <span class="text-sm font-bold text-slate-500 uppercase">เพิ่มวิดีโอประกอบ (ถ้ามี)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Packages & Terms -->
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">เลือกแพ็คเกจการฝากขาย</h2>
+            <p class="text-sm text-slate-500 mb-8">TruckExpert จะช่วยคุณทำการตลาดและคัดกรองลูกค้าที่สนใจจริงเพื่อปิดการขายให้ไวที่สุด</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <!-- Bronze -->
+                <div class="package-card border-2 border-slate-100 rounded-2xl p-6 relative overflow-hidden bg-white cursor-pointer hover:border-orange-200">
+                    <div class="text-xs font-bold text-slate-400 uppercase mb-2">แพ็คเกจ</div>
+                    <h3 class="text-xl font-black text-slate-700 mb-4">ทองแดง (BRONZE)</h3>
+                    <ul class="text-[11px] space-y-3 text-slate-500 mb-6">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> ลงประกาศบนหน้าเว็บ</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> คัดกรองผู้ซื้อเบื้องต้น</li>
+                        <li class="line-through text-slate-300"><i class="fa-solid fa-xmark mr-2"></i> คลิปวิดีโอโปรโมทพิเศษ</li>
+                    </ul>
+                    <div class="text-xs font-bold text-orange-600 italic">ค่าดำเนินการ 1.5% เมื่อขายได้</div>
+                </div>
+
+                <!-- Gold -->
+                <div class="package-card border-2 border-orange-500 rounded-2xl p-6 relative overflow-hidden bg-orange-50 cursor-pointer shadow-lg shadow-orange-100 scale-105">
+                    <div class="absolute top-0 right-0 bg-orange-500 text-white text-[9px] px-3 py-1 font-bold">แนะนำ</div>
+                    <div class="text-xs font-bold text-orange-400 uppercase mb-2">แพ็คเกจ</div>
+                    <h3 class="text-xl font-black text-orange-600 mb-4">ทอง (GOLD)</h3>
+                    <ul class="text-[11px] space-y-3 text-slate-700 mb-6 font-bold">
+                        <li><i class="fa-solid fa-check text-orange-500 mr-2"></i> ตรวจสภาพ
