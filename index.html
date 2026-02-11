@@ -1,157 +1,122 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TruckExpert - แพลตฟอร์มซื้อขายรถบรรทุกครบวงจร</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
-        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .category-card:hover { border-color: #2563eb; background-color: #eff6ff; }
-        .active-category { border-color: #2563eb; background-color: #eff6ff; color: #2563eb; }
-        .nav-item:hover { color: #2563eb; }
-        .nav-active { color: #2563eb; border-bottom: 2px solid #2563eb; }
-        .seller-badge { background: linear-gradient(90deg, #f97316 0%, #ea580c 100%); }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruckExpert - แพลตฟอร์มซื้อขายรถบรรทุกครบวงจร</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .category-card:hover { border-color: #2563eb; background-color: #eff6ff; }
+        .active-category { border-color: #2563eb; background-color: #eff6ff; color: #2563eb; }
+        .nav-item:hover { color: #2563eb; }
+        .nav-active { color: #2563eb; border-bottom: 2px solid #2563eb; }
+        .seller-badge { background: linear-gradient(90deg, #f97316 0%, #ea580c 100%); }
+    </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <!-- Top Thin Bar -->
-        <div class="bg-blue-900 text-white text-[10px] py-1">
-            <div class="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <span><i class="fa-solid fa-phone mr-1"></i> Call Center: 02-XXX-XXXX</span>
-                    <span class="hidden md:inline text-blue-300">|</span>
-                    <a href="#" class="hover:text-orange-400">เช็คสถานะการส่งรถ</a>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-orange-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> ตรวจสภาพ 117 รายการ (สำหรับผู้ขาย)</a>
-                    <a href="#" class="hover:text-orange-400">บทความความรู้</a>
-                </div>
-            </div>
-        </div>
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="bg-blue-900 text-white text-[10px] py-1">
+            <div class="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <span><i class="fa-solid fa-phone mr-1"></i> Call Center: 02-XXX-XXXX</span>
+                    <span class="hidden md:inline text-blue-300">|</span>
+                    <a href="#" class="hover:text-orange-400">เช็คสถานะการส่งรถ</a>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-orange-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> ตรวจสภาพ 117 รายการ (สำหรับผู้ขาย)</a>
+                    <a href="#" class="hover:text-orange-400">บทความความรู้</a>
+                </div>
+            </div>
+        </div>
 
-        <!-- Main Nav -->
-        <div class="max-w-[1400px] mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-10">
-                <!-- Logo -->
-                <div class="text-3xl font-bold text-blue-800 tracking-tighter cursor-pointer flex items-center">
-                    TRUCK<span class="text-orange-500">EXPERT</span>
-                </div>
+        <div class="max-w-[1400px] mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-10">
+                <div class="text-3xl font-bold text-blue-800 tracking-tighter cursor-pointer flex items-center" onclick="window.location.href='index.html'">
+                    TRUCK<span class="text-orange-500">EXPERT</span>
+                </div>
 
-                <!-- Main Menu Items -->
-                <div class="hidden xl:flex items-center space-x-6 text-sm font-semibold text-slate-600">
-                    <a href="#" class="nav-item nav-active py-2">ซื้อรถ/เครื่องจักร</a>
-                    <a href="#" class="nav-item py-2 flex items-center">
-                        รถ Verified <span class="ml-1 bg-red-500 text-white text-[9px] px-1.5 rounded-full animate-pulse font-normal">HOT</span>
-                    </a>
-                    <a href="#" class="nav-item py-2">ฝากขาย/ฝากจอด</a>
-                    <a href="#" class="nav-item py-2">ศูนย์บริการ</a>
-                    <!-- Finance Menu - ชัดเจนขึ้น -->
-                    <a href="#" class="nav-item py-2 flex items-center text-blue-700">
-                        <i class="fa-solid fa-sack-dollar mr-1.5"></i> จัดไฟแนนซ์ & ประกัน
-                    </a>
-                    <a href="#" class="nav-item py-2 text-orange-600">ประมูลออนไลน์</a>
-                </div>
-            </div>
+                <div class="hidden xl:flex items-center space-x-6 text-sm font-semibold text-slate-600">
+                    <a href="#" class="nav-item nav-active py-2">ซื้อรถ/เครื่องจักร</a>
+                    <a href="#" class="nav-item py-2 flex items-center">
+                        รถ Verified <span class="ml-1 bg-red-500 text-white text-[9px] px-1.5 rounded-full animate-pulse font-normal">HOT</span>
+                    </a>
+                    <a href="sell.html" class="nav-item py-2 border-b-2 border-transparent hover:border-blue-600">ฝากขาย/ฝากจอด</a>
+                    <a href="#" class="nav-item py-2">ศูนย์บริการ</a>
+                    <a href="#" class="nav-item py-2 flex items-center text-blue-700">
+                        <i class="fa-solid fa-sack-dollar mr-1.5"></i> จัดไฟแนนซ์ & ประกัน
+                    </a>
+                    <a href="#" class="nav-item py-2 text-orange-600">ประมูลออนไลน์</a>
+                </div>
+            </div>
 
-            <div class="flex items-center space-x-4">
-                <div class="hidden lg:flex items-center bg-slate-100 rounded-full px-4 py-2 w-56 mr-2 border border-transparent focus-within:border-blue-400 transition-all">
-                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2"></i>
-                    <input type="text" placeholder="ค้นหา..." class="bg-transparent border-none focus:outline-none text-xs w-full">
-                </div>
-                <!-- Seller Action Button -->
-<a href="index.html" class="seller-badge text-white px-5 py-2.5 rounded-xl font-bold hover:opacity-90 transition text-xs shadow-lg flex items-center">
-    <i class="fa-solid fa-truck-fast mr-2"></i> ลงประกาศขาย
-</a>
-                <div class="h-9 w-9 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 cursor-pointer hover:bg-slate-200 border border-slate-200">
-                    <i class="fa-solid fa-user text-sm"></i>
-                </div>
-            </div>
-        </div>
-    </nav>
+            <div class="flex items-center space-x-4">
+                <div class="hidden lg:flex items-center bg-slate-100 rounded-full px-4 py-2 w-56 mr-2 border border-transparent focus-within:border-blue-400 transition-all">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2"></i>
+                    <input type="text" placeholder="ค้นหา..." class="bg-transparent border-none focus:outline-none text-xs w-full">
+                </div>
+                
+                <a href="sell.html" class="seller-badge text-white px-5 py-2.5 rounded-xl font-bold hover:opacity-90 transition text-xs shadow-lg flex items-center">
+                    <i class="fa-solid fa-truck-fast mr-2"></i> ลงประกาศขาย
+                </a>
 
-    <!-- Banner สำหรับผู้ขาย (Verified & Upgrade) -->
-    <div class="bg-gradient-to-r from-blue-50 to-orange-50 border-b border-slate-200">
-        <div class="max-w-[1400px] mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center space-x-4">
-                <div class="bg-white p-2 rounded-lg shadow-sm">
-                    <i class="fa-solid fa-certificate text-2xl text-orange-500"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-800">อยากขายรถได้ราคาสูงขึ้น?</h3>
-                    <p class="text-[11px] text-slate-500">สมัครบริการตรวจสภาพ 117 รายการ และรับโปรโมชั่น "แต่งหล่อก่อนขาย" อัปราคาได้ทันที!</p>
-                </div>
-            </div>
-            <div class="flex space-x-3">
-                <button class="bg-white border border-orange-500 text-orange-600 px-4 py-2 rounded-lg text-xs font-bold hover:bg-orange-50 transition">รายละเอียดบริการ</button>
-                <button class="bg-orange-500 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-orange-600 transition shadow-sm shadow-orange-200">อัปเกรดเป็นรถ Verified</button>
-            </div>
-        </div>
-    </div>
+                <div class="h-9 w-9 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 cursor-pointer hover:bg-slate-200 border border-slate-200">
+                    <i class="fa-solid fa-user text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <main class="max-w-[1400px] mx-auto px-4 py-8">
-        
-        <!-- STEP 1: Main Categories -->
-        <div class="mb-10 text-center md:text-left">
-            <h2 class="text-2xl font-bold text-slate-800 mb-1">เลือกตามประเภทการใช้งาน</h2>
-            <p class="text-slate-500 text-sm mb-6">แพลตฟอร์มที่รวมรถบรรทุกและเครื่องจักรมากที่สุดในไทย</p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <div class="category-card active-category border-2 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-truck-moving text-3xl text-blue-600"></i>
-                    </div>
-                    <span class="text-sm font-bold">รถบรรทุก</span>
-                    <span class="text-[10px] text-slate-400 mt-1">1,240 คัน</span>
-                </div>
-                <div class="category-card border-2 border-transparent rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
-                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-trailer text-3xl text-slate-600"></i>
-                    </div>
-                    <span class="text-sm font-bold">หางรถบรรทุก</span>
-                    <span class="text-[10px] text-slate-400 mt-1">450 รายการ</span>
-                </div>
-                <div class="category-card border-2 border-transparent rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
-                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-tractor text-3xl text-slate-600"></i>
-                    </div>
-                    <span class="text-sm font-bold">รถขุด / รถตัก</span>
-                    <span class="text-[10px] text-slate-400 mt-1">320 คัน</span>
-                </div>
-                <div class="category-card border-2 border-transparent rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
-                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-truck-pickup text-3xl text-slate-600"></i>
-                    </div>
-                    <span class="text-sm font-bold">รถกระบะ / รถตู้</span>
-                    <span class="text-[10px] text-slate-400 mt-1">89 คัน</span>
-                </div>
-                <div class="category-card border-2 border-transparent rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
-                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-gears text-3xl text-slate-600"></i>
-                    </div>
-                    <span class="text-sm font-bold">อะไหล่ / อุปกรณ์</span>
-                    <span class="text-[10px] text-slate-400 mt-1">2,100 รายการ</span>
-                </div>
-                <div class="category-card border-2 border-blue-600 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-blue-50">
-                    <div class="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center mb-3 shadow-lg shadow-blue-200">
-                        <i class="fa-solid fa-shield-heart text-3xl text-white"></i>
-                    </div>
-                    <span class="text-sm font-bold text-blue-800">รถแนะนำ</span>
-                    <span class="text-[10px] text-blue-400 mt-1">Verified Only</span>
-                </div>
-            </div>
-        </div>
+    <div class="bg-gradient-to-r from-blue-50 to-orange-50 border-b border-slate-200">
+        <div class="max-w-[1400px] mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="bg-white p-2 rounded-lg shadow-sm">
+                    <i class="fa-solid fa-certificate text-2xl text-orange-500"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-slate-800">อยากขายรถได้ราคาสูงขึ้น?</h3>
+                    <p class="text-[11px] text-slate-500">สมัครบริการตรวจสภาพ 117 รายการ และรับโปรโมชั่น "แต่งหล่อก่อนขาย" อัปราคาได้ทันที!</p>
+                </div>
+            </div>
+            <div class="flex space-x-3">
+                <button class="bg-white border border-orange-500 text-orange-600 px-4 py-2 rounded-lg text-xs font-bold hover:bg-orange-50 transition">รายละเอียดบริการ</button>
+                <button class="bg-orange-500 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-orange-600 transition shadow-sm shadow-orange-200">อัปเกรดเป็นรถ Verified</button>
+            </div>
+        </div>
+    </div>
 
-        <div class="flex flex-col lg:flex-row gap-8">
-            
-            <!-- Sidebar Filter -->
-            <aside class="w-full lg:w-72 flex-shrink-0">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-24">
-                    <div class="flex items-center justify-between mb-6">
-อ้นนี้เป็นเว็บหน้า home page ฉันต้องการสร้างหน้านี้ด้วย ช่วยแนะนำที
+    <main class="max-w-[1400px] mx-auto px-4 py-8">
+        <div class="mb-10 text-center md:text-left">
+            <h2 class="text-2xl font-bold text-slate-800 mb-1">เลือกตามประเภทการใช้งาน</h2>
+            <p class="text-slate-500 text-sm mb-6">แพลตฟอร์มที่รวมรถบรรทุกและเครื่องจักรมากที่สุดในไทย</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="category-card active-category border-2 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-truck-moving text-3xl text-blue-600"></i>
+                    </div>
+                    <span class="text-sm font-bold">รถบรรทุก</span>
+                    <span class="text-[10px] text-slate-400 mt-1">1,240 คัน</span>
+                </div>
+                <div class="category-card border-2 border-transparent rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-trailer text-3xl text-slate-600"></i>
+                    </div>
+                    <span class="text-sm font-bold">หางรถบรรทุก</span>
+                </div>
+                <div class="category-card border-2 border-transparent rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition shadow-sm bg-white">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-tractor text-3xl text-slate-600"></i>
+                    </div>
+                    <span class="text-sm font-bold">รถขุด / รถตัก</span>
+                </div>
+                </div>
+        </div>
+    </main>
+
+</body>
+</html>
