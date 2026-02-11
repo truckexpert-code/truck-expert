@@ -66,12 +66,8 @@
         </div>
 
         <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 mb-8">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-slate-800">ข้อมูลรถที่ต้องการฝากขาย</h2>
-                <span class="text-xs font-bold text-red-500">* จำเป็นต้องระบุ</span>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">ข้อมูลรถที่ต้องการฝากขาย</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-2">ยี่ห้อ / รุ่น</label>
                     <input type="text" placeholder="เช่น HINO VICTOR 500" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:border-blue-500">
@@ -82,35 +78,29 @@
                 </div>
             </div>
 
-            <div class="mb-10">
-                <label class="block text-sm font-bold text-slate-700 mb-4">รูปภาพประกอบ (บังคับอย่างน้อย 4 มุม)</label>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
-                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านหน้า</span>
-                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
-                    </div>
-                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
-                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านซ้าย</span>
-                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
-                    </div>
-                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
-                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านขวา</span>
-                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
-                    </div>
-                    <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
-                        <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านหลัง</span>
-                        <span class="text-[9px] text-red-400 mt-1">* บังคับ</span>
-                    </div>
+            <label class="block text-sm font-bold text-slate-700 mb-4">รูปภาพประกอบ (บังคับอย่างน้อย 4 มุม)</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                    <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านหน้า</span>
+                </div>
+                <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                    <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านซ้าย</span>
+                </div>
+                <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                    <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านขวา</span>
+                </div>
+                <div class="upload-box rounded-2xl p-4 flex flex-col items-center justify-center text-center aspect-square cursor-pointer">
+                    <i class="fa-solid fa-camera text-slate-300 text-2xl mb-2"></i>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">ด้านหลัง</span>
                 </div>
             </div>
         </div>
 
         <div class="flex justify-center">
-            <button class="bg-blue-600 text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition" onclick="alert('บันทึกข้อมูลสำเร็จ! ทีมงานจะติดต่อกลับโดยเร็วที่สุด')">
+            <button class="bg-blue-600 text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 transition" onclick="alert('บันทึกข้อมูลสำเร็จ! ทีมงานจะติดต่อกลับโดยเร็วที่สุด')">
                 ยืนยันการลงทะเบียนฝากขาย
             </button>
         </div>
