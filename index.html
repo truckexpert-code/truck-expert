@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
         body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
-        .category-card { transition: all 0.3s ease; }
+        .category-card { transition: all 0.3s ease; border-width: 2px; }
         .category-card:hover { transform: translateY(-8px); border-color: #2563eb; }
         .truck-card { transition: all 0.3s; }
         .truck-card:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
@@ -33,19 +33,21 @@
     <main class="max-w-[1200px] mx-auto px-4 py-8">
         <h2 class="text-2xl font-bold text-slate-800 mb-6">เลือกตามประเภทการใช้งาน</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div onclick="showTrucks()" class="category-card bg-white border-2 border-slate-100 rounded-3xl p-8 text-center cursor-pointer">
+            <div onclick="showTrucks()" class="category-card bg-white border-slate-100 rounded-3xl p-8 text-center cursor-pointer">
                 <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fa-solid fa-truck text-blue-600 text-3xl"></i>
                 </div>
                 <h3 class="font-bold text-lg text-slate-800">รถบรรทุก</h3>
                 <p class="text-slate-400 text-sm">คลิกเพื่อดูรายการ</p>
             </div>
+            
             <div class="bg-slate-50 border-2 border-slate-100 rounded-3xl p-8 text-center opacity-50">
                 <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
                     <i class="fa-solid fa-trailer text-3xl"></i>
                 </div>
                 <h3 class="font-bold text-lg text-slate-400">หางรถบรรทุก</h3>
             </div>
+
             <div class="bg-slate-50 border-2 border-slate-100 rounded-3xl p-8 text-center opacity-50">
                 <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
                     <i class="fa-solid fa-tractor text-3xl"></i>
@@ -62,13 +64,13 @@
     </main>
 
     <script>
-        // ใส่ลิงก์ CSV ของคุณไว้ตรงนี้แล้วค่ะ
+        // ลิงก์ Google Sheets ของคุณ
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmUD0PUNDkbj7Od4HhCFUIm35O9hUb2R2BYPL01GiberKeK-MJPdgVqiuxORXdoffEXFjM81Y-Qp0h/pub?gid=978665051&single=true&output=csv';
 
         function showTrucks() {
             document.getElementById('display-section').classList.remove('hidden');
             document.getElementById('display-section').scrollIntoView({ behavior: 'smooth' });
-            document.getElementById('truck-container').innerHTML = '<div class="col-span-full text-center py-20">กำลังดึงข้อมูล...</div>';
+            document.getElementById('truck-container').innerHTML = '<div class="col-span-full text-center py-20 text-blue-500 font-bold">กำลังค้นหารถที่อนุมัติแล้ว...</div>';
             fetchTruckData();
         }
 
@@ -83,42 +85,63 @@
                 let found = 0;
 
                 rows.forEach(row => {
+                    // แยกคอลัมน์ด้วย Comma (รองรับข้อความที่มี comma ในตัว)
                     const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                     
-                    const brand = columns[11]?.replace(/"/g, "").trim();    // คอลัมน์ L
-                    let imageUrl = columns[30]?.replace(/"/g, "").trim();   // คอลัมน์ AE
-                    const status = columns[31]?.replace(/"/g, "").trim();   // คอลัมน์ AF
+                    const brand = columns[11]?.replace(/"/g, "").trim();    // คอลัมน์ L (แบรนด์)
+                    const status = columns[31]?.replace(/"/g, "").trim();   // คอลัมน์ AF (สถานะ)
 
+                    // เช็คเงื่อนไขต้อง "อนุมัติแล้ว" เท่านั้น
                     if (status === "อนุมัติแล้ว") {
                         found++;
                         
-                        // แก้ไขลิงก์ Google Drive ให้แสดงรูปได้
+                        // ระบบค้นหารูปหน้าปกจาก AG (32) ถึง AM (38)
+                        let imageUrl = "";
+                        for (let i = 32; i <= 38; i++) {
+                            let imgCandidate = columns[i]?.replace(/"/g, "").trim();
+                            if (imgCandidate && imgCandidate !== "") {
+                                imageUrl = imgCandidate;
+                                break; // เจอรูปแรกปุ๊บ ใช้เป็นหน้าปกทันที
+                            }
+                        }
+
+                        // ตรวจสอบและแปลงลิงก์ Google Drive อัตโนมัติ
                         if (imageUrl.includes("drive.google.com")) {
-                            imageUrl = imageUrl.replace("file/d/", "uc?export=view&id=").split('/view')[0];
+                            let fileId = "";
+                            if (imageUrl.includes("id=")) {
+                                fileId = imageUrl.split("id=")[1].split("&")[0];
+                            } else {
+                                fileId = imageUrl.split("/d/")[1].split("/")[0];
+                            }
+                            imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
                         }
 
                         html += `
                             <div class="truck-card bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
                                 <div class="h-56 bg-slate-100 relative">
-                                    <img src="${imageUrl}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'">
+                                    <img src="${imageUrl}" class="w-full h-full object-cover" 
+                                         onerror="this.src='https://via.placeholder.com/400x300?text=กำลังเตรียมรูปภาพ'">
                                     <div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full shadow-sm">
                                         <span class="text-[10px] font-bold text-green-600 uppercase">Verified</span>
                                     </div>
                                 </div>
                                 <div class="p-6">
+                                    <div class="text-xs text-blue-600 font-bold mb-1">TRUCK</div>
                                     <h3 class="text-xl font-bold text-slate-800 mb-4">${brand}</h3>
-                                    <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">ดูรายละเอียด</button>
+                                    <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+                                        ดูรายละเอียด
+                                    </button>
                                 </div>
                             </div>
                         `;
                     }
                 });
 
-                container.innerHTML = found > 0 ? html : '<div class="col-span-full text-center py-20 text-slate-400">ยังไม่มีรายการรถที่ได้รับการอนุมัติ</div>';
+                container.innerHTML = found > 0 ? html : '<div class="col-span-full text-center py-20 text-slate-400">ไม่พบรถที่ผ่านการอนุมัติในระบบ</div>';
 
             } catch (error) {
-                console.error(error);
-                document.getElementById('truck-container').innerHTML = '<p class="col-span-full text-center text-red-500">ไม่สามารถโหลดข้อมูลได้</p>';
+                console.error('Error fetching data:', error);
+                document.getElementById('truck-container').innerHTML = '<p class="col-span-full text-center text-red-500">เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล</p>';
             }
         }
     </script>
