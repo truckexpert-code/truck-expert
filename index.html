@@ -58,7 +58,7 @@
                     <i class="fa-solid fa-truck text-blue-600 text-4xl"></i>
                 </div>
                 <h3 class="font-bold text-xl text-slate-800">รถบรรทุก</h3>
-                <p class="text-slate-400 mt-2">1,240 คัน</p>
+                <p id="truck-count" class="text-slate-400 mt-2">กำลังโหลด...</p>
             </div>
 
             <div class="bg-slate-50 border-2 border-slate-100 rounded-[2rem] p-10 text-center opacity-60 grayscale">
@@ -93,6 +93,25 @@
     <script>
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmUD0PUNDkbj7Od4HhCFUIm35O9hUb2R2BYPL01GiberKeK-MJPdgVqiuxORXdoffEXFjM81Y-Qp0h/pub?gid=978665051&single=true&output=csv';
 
+        // ฟังก์ชันดึงข้อมูลมาเพื่อนับจำนวนตั้งแต่โหลดหน้าแรก
+        async function updateCount() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                let count = 0;
+                rows.forEach(row => {
+                    const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if (columns[31]?.replace(/"/g, "").trim() === "อนุมัติแล้ว") {
+                        count++;
+                    }
+                });
+                document.getElementById('truck-count').innerText = count.toLocaleString() + ' คัน';
+            } catch (e) {
+                document.getElementById('truck-count').innerText = '0 คัน';
+            }
+        }
+
         function showTrucks() {
             document.getElementById('display-section').classList.remove('hidden');
             document.getElementById('display-section').scrollIntoView({ behavior: 'smooth' });
@@ -117,7 +136,6 @@
                     if (status === "อนุมัติแล้ว") {
                         found++;
                         let imageUrl = "";
-                        // หาหน้าปกจาก AG (32) ถึง AM (38)
                         for (let i = 32; i <= 38; i++) {
                             let imgCandidate = columns[i]?.replace(/"/g, "").trim();
                             if (imgCandidate && imgCandidate !== "") {
@@ -156,6 +174,9 @@
                 container.innerHTML = '<p class="col-span-full text-center text-red-500">เกิดข้อผิดพลาดในการดึงข้อมูล</p>';
             }
         }
+
+        // เรียกนับจำนวนทันทีที่เปิดหน้าเว็บ
+        updateCount();
     </script>
 </body>
 </html>
