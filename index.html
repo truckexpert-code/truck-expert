@@ -1,111 +1,209 @@
-<script>
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmUD0PUNDkbj7Od4HhCFUIm35O9hUb2R2BYPL01GiberKeK-MJPdgVqiuxORXdoffEXFjM81Y-Qp0h/pub?gid=978665051&single=true&output=csv';
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruckExpert - แพลตฟอร์มซื้อขายรถบรรทุก</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
+        .category-card { transition: all 0.3s ease; border-width: 2px; }
+        .category-card:hover { transform: translateY(-8px); border-color: #2563eb; cursor: pointer; }
+        .truck-card { transition: all 0.3s; }
+        .truck-card:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body>
 
-    // ฟังก์ชันนับจำนวนแยกหมวดหมู่
-    async function updateCounts() {
-        try {
-            const response = await fetch(csvUrl);
-            const data = await response.text();
-            const rows = data.split('\n').slice(1);
-            
-            let truckCount = 0;
-            let trailerCount = 0;
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-[1200px] mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="text-3xl font-bold text-blue-800 tracking-tighter cursor-pointer" onclick="window.location.reload()">
+                TRUCK<span class="text-orange-500">EXPERT</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="sell.html" class="bg-orange-500 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-orange-600 transition flex items-center shadow-lg">
+                    <i class="fa-solid fa-truck-fast mr-2"></i> ลงประกาศขาย
+                </a>
+                <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-            rows.forEach(row => {
-                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                const type = columns[12]?.replace(/"/g, "").trim();   // คอลัมน์ M
-                const status = columns[31]?.replace(/"/g, "").trim(); // คอลัมน์ AF
+    <main class="max-w-[1200px] mx-auto px-4 py-8">
+        
+        <div class="bg-white rounded-3xl p-8 mb-12 flex flex-col md:flex-row items-center justify-between border border-slate-100 shadow-sm gap-6">
+            <div class="flex items-center gap-6">
+                <div class="bg-orange-100 w-16 h-16 rounded-2xl flex items-center justify-center text-orange-500 text-3xl">
+                    <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-1">อยากขายรถได้ราคาสูงขึ้น?</h2>
+                    <p class="text-slate-500">สมัครบริการตรวจสภาพ 117 รายการ และรับโปรโมชั่น "แต่งหล่อก่อนขาย" อัปราคาได้ทันที!</p>
+                </div>
+            </div>
+            <div class="flex gap-3 w-full md:w-auto">
+                <button class="flex-1 md:flex-none border-2 border-orange-200 text-orange-600 px-6 py-3 rounded-2xl font-bold hover:bg-orange-50 transition">รายละเอียดบริการ</button>
+                <button class="flex-1 md:flex-none bg-orange-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-orange-600 transition">อัปเกรดเป็นรถ Verified</button>
+            </div>
+        </div>
 
-                if (status === "อนุมัติแล้ว") {
-                    if (type === "หางพ่วง") {
-                        trailerCount++;
-                    } else {
-                        truckCount++;
-                    }
-                }
-            });
+        <h2 class="text-2xl font-bold text-slate-800 mb-8">เลือกตามประเภทการใช้งาน</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div onclick="showItems('รถบรรทุก')" class="category-card bg-white border-slate-100 rounded-[2rem] p-10 text-center shadow-sm">
+                <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-truck text-blue-600 text-4xl"></i>
+                </div>
+                <h3 class="font-bold text-xl text-slate-800">รถบรรทุก</h3>
+                <p id="truck-count" class="text-slate-400 mt-2">กำลังโหลด...</p>
+            </div>
 
-            document.getElementById('truck-count').innerText = truckCount.toLocaleString() + ' คัน';
-            document.getElementById('trailer-count').innerText = trailerCount.toLocaleString() + ' คัน';
-            
-            // เปิดให้ปุ่มหางรถบรรทุกสามารถกดได้
-            const trailerBtn = document.getElementById('trailer-btn');
-            trailerBtn.classList.remove('opacity-60', 'grayscale');
-            trailerBtn.classList.add('cursor-pointer');
-        } catch (e) {
-            console.error("Error updating counts:", e);
+            <div id="trailer-btn" onclick="showItems('หางพ่วง')" class="category-card bg-white border-slate-100 rounded-[2rem] p-10 text-center shadow-sm opacity-60 grayscale">
+                <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-trailer text-blue-600 text-4xl"></i>
+                </div>
+                <h3 class="font-bold text-xl text-slate-800">หางรถบรรทุก</h3>
+                <p id="trailer-count" class="text-slate-400 mt-2">กำลังโหลด...</p>
+            </div>
+
+            <div class="bg-slate-50 border-2 border-slate-100 rounded-[2rem] p-10 text-center opacity-60 grayscale">
+                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-tractor text-slate-300 text-4xl"></i>
+                </div>
+                <h3 class="font-bold text-xl text-slate-400">รถขุด / รถตัก</h3>
+                <p class="text-slate-300 mt-2">เร็วๆ นี้</p>
+            </div>
+        </div>
+
+        <div id="display-section" class="hidden border-t pt-12">
+            <div class="flex items-center justify-between mb-10">
+                <h2 id="section-title" class="text-3xl font-bold text-slate-800">รายการรถแนะนำ</h2>
+                <div class="flex gap-2">
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">สถานะ: อนุมัติแล้ว</span>
+                </div>
+            </div>
+            <div id="truck-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                </div>
+        </div>
+    </main>
+
+    <script>
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmUD0PUNDkbj7Od4HhCFUIm35O9hUb2R2BYPL01GiberKeK-MJPdgVqiuxORXdoffEXFjM81Y-Qp0h/pub?gid=978665051&single=true&output=csv';
+
+        // ฟังก์ชันเช็คว่าเป็นหาง (หางพ่วง หรือ กึ่งพ่วง)
+        function isTrailerType(type) {
+            return type === "หางพ่วง" || type === "กึ่งพ่วง";
         }
-    }
 
-    // ฟังก์ชันแสดงผลแยกตามประเภท
-    async function showItems(filterType) {
-        document.getElementById('display-section').classList.remove('hidden');
-        document.getElementById('display-section').scrollIntoView({ behavior: 'smooth' });
-        
-        const titleElement = document.getElementById('section-title');
-        titleElement.innerText = filterType === "หางพ่วง" ? "รายการหางรถบรรทุกแนะนำ" : "รายการรถบรรทุกแนะนำ";
-        
-        const container = document.getElementById('truck-container');
-        container.innerHTML = '<div class="col-span-full text-center py-20 text-blue-500 font-bold"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดข้อมูล...</div>';
+        // ฟังก์ชันนับจำนวนแยกหมวด
+        async function updateCounts() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                let truckCount = 0;
+                let trailerCount = 0;
 
-        try {
-            const response = await fetch(csvUrl);
-            const data = await response.text();
-            const rows = data.split('\n').slice(1);
-            let html = '';
-            let found = 0;
+                rows.forEach(row => {
+                    const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    const type = columns[12]?.replace(/"/g, "").trim();   // คอลัมน์ M
+                    const status = columns[31]?.replace(/"/g, "").trim(); // คอลัมน์ AF
 
-            rows.forEach(row => {
-                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                const brand = columns[11]?.replace(/"/g, "").trim(); 
-                const type = columns[12]?.replace(/"/g, "").trim();   // คอลัมน์ M
-                const status = columns[31]?.replace(/"/g, "").trim();
-
-                // ตรวจสอบทั้งสถานะและประเภท
-                const isMatch = (filterType === "หางพ่วง") ? (type === "หางพ่วง") : (type !== "หางพ่วง");
-
-                if (status === "อนุมัติแล้ว" && isMatch) {
-                    found++;
-                    let imageUrl = "";
-                    for (let i = 32; i <= 38; i++) {
-                        let imgCandidate = columns[i]?.replace(/"/g, "").trim();
-                        if (imgCandidate && imgCandidate !== "") {
-                            imageUrl = imgCandidate;
-                            break;
+                    if (status === "อนุมัติแล้ว") {
+                        if (isTrailerType(type)) {
+                            trailerCount++;
+                        } else {
+                            truckCount++;
                         }
                     }
+                });
 
-                    if (imageUrl.includes("drive.google.com")) {
-                        let fileId = imageUrl.includes("id=") ? imageUrl.split("id=")[1].split("&")[0] : imageUrl.split("/d/")[1].split("/")[0];
-                        imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
-                    }
+                document.getElementById('truck-count').innerText = truckCount.toLocaleString() + ' คัน';
+                document.getElementById('trailer-count').innerText = trailerCount.toLocaleString() + ' คัน';
+                
+                // เปิดให้ปุ่มหางรถบรรทุกกดได้ถ้ามีข้อมูล
+                if (trailerCount > 0) {
+                    const trailerBtn = document.getElementById('trailer-btn');
+                    trailerBtn.classList.remove('opacity-60', 'grayscale');
+                }
+            } catch (e) {
+                console.error("Error updating counts:", e);
+            }
+        }
 
-                    html += `
-                        <div class="truck-card bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
-                            <div class="h-64 bg-slate-100 relative">
-                                <img src="${imageUrl}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x300?text=กำลังเตรียมรูปภาพ'">
-                                <div class="absolute top-5 right-5 bg-white/95 backdrop-blur px-4 py-1.5 rounded-full shadow-md">
-                                    <span class="text-xs font-black text-green-600 uppercase tracking-widest">Verified</span>
+        // ฟังก์ชันแสดงผลแยกประเภท
+        async function showItems(filterMode) {
+            document.getElementById('display-section').classList.remove('hidden');
+            document.getElementById('display-section').scrollIntoView({ behavior: 'smooth' });
+            
+            const titleElement = document.getElementById('section-title');
+            titleElement.innerText = filterMode === "หางพ่วง" ? "รายการหางรถบรรทุกแนะนำ" : "รายการรถบรรทุกแนะนำ";
+            
+            const container = document.getElementById('truck-container');
+            container.innerHTML = '<div class="col-span-full text-center py-20 text-blue-500 font-bold"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดข้อมูล...</div>';
+
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                let html = '';
+                let found = 0;
+
+                rows.forEach(row => {
+                    const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    const brand = columns[11]?.replace(/"/g, "").trim(); 
+                    const type = columns[12]?.replace(/"/g, "").trim();   // คอลัมน์ M
+                    const status = columns[31]?.replace(/"/g, "").trim();
+
+                    // ตรวจสอบเงื่อนไขการกรอง
+                    const isMatch = (filterMode === "หางพ่วง") ? isTrailerType(type) : !isTrailerType(type);
+
+                    if (status === "อนุมัติแล้ว" && isMatch) {
+                        found++;
+                        let imageUrl = "";
+                        for (let i = 32; i <= 38; i++) {
+                            let imgCandidate = columns[i]?.replace(/"/g, "").trim();
+                            if (imgCandidate && imgCandidate !== "") {
+                                imageUrl = imgCandidate;
+                                break;
+                            }
+                        }
+
+                        if (imageUrl.includes("drive.google.com")) {
+                            let fileId = imageUrl.includes("id=") ? imageUrl.split("id=")[1].split("&")[0] : imageUrl.split("/d/")[1].split("/")[0];
+                            imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                        }
+
+                        html += `
+                            <div class="truck-card bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+                                <div class="h-64 bg-slate-100 relative">
+                                    <img src="${imageUrl}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x300?text=กำลังเตรียมรูปภาพ'">
+                                    <div class="absolute top-5 right-5 bg-white/95 backdrop-blur px-4 py-1.5 rounded-full shadow-md">
+                                        <span class="text-xs font-black text-green-600 uppercase tracking-widest">Verified</span>
+                                    </div>
+                                </div>
+                                <div class="p-8">
+                                    <div class="text-blue-600 font-bold text-xs mb-2 tracking-widest uppercase">${isTrailerType(type) ? "TRAILER" : "TRUCK"}</div>
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-6">${brand}</h3>
+                                    <button class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition">
+                                        ดูรายละเอียดเพิ่มเติม
+                                    </button>
                                 </div>
                             </div>
-                            <div class="p-8">
-                                <div class="text-blue-600 font-bold text-xs mb-2 tracking-widest uppercase">${filterType === "หางพ่วง" ? "TRAILER" : "TRUCK"}</div>
-                                <h3 class="text-2xl font-bold text-slate-800 mb-6">${brand}</h3>
-                                <button class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition">
-                                    ดูรายละเอียดเพิ่มเติม
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
+                        `;
+                    }
+                });
 
-            container.innerHTML = found > 0 ? html : '<div class="col-span-full text-center py-20 text-slate-400 font-bold">ไม่พบรายการในขณะนี้</div>';
-        } catch (error) {
-            container.innerHTML = '<p class="col-span-full text-center text-red-500">เกิดข้อผิดพลาดในการดึงข้อมูล</p>';
+                container.innerHTML = found > 0 ? html : '<div class="col-span-full text-center py-20 text-slate-400 font-bold">ไม่พบรายการในขณะนี้</div>';
+            } catch (error) {
+                container.innerHTML = '<p class="col-span-full text-center text-red-500">เกิดข้อผิดพลาดในการดึงข้อมูล</p>';
+            }
         }
-    }
 
-    // เรียกนับจำนวนทันทีที่โหลดหน้าแรก
-    updateCounts();
-</script>
+        updateCounts();
+    </script>
+</body>
+</html>
